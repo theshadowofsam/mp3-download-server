@@ -11,7 +11,7 @@ format = 250
 
 def main(url):
     url = yt_search.search(url)
-    r = requests.get(url, allow_redirects=True)
+    r = requests.get(url[1], allow_redirects=True)
     print(r)
 
 if __name__ == "__main__":
