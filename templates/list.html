@@ -4,7 +4,7 @@
     <h1>{% block title %} Completed Videos {% endblock %}</h1>
     {% for file in files %}
         <div class='message'>
-            <a href="{{ url_for('download', file=file) }}">{{ file }}</a>
+            <a href="{{ url_for('download', filename=file) }}">{{ file }}</a>
         </div>
     {% endfor %}
 {% endblock %}
