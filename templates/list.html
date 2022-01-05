@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Completed Videos {% endblock %}</h1>
+    <h1>{% block title %} Completed Videos {% endblock %}</h1>
+    {% for file in files %}
+        <div class='message'>
+            <a href="{{ url_for('download', file=file) }}">{{ file }}</a>
+        </div>
+    {% endfor %}
 {% endblock %}
