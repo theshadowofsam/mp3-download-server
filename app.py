@@ -6,9 +6,10 @@ Samuel Lee
 
 """
 from flask import Flask, request, render_template, url_for, flash, redirect
-import dlp
+from multiprocessing import Process
 import os
 import re
+import dlp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24).hex()
@@ -28,6 +29,11 @@ def root():
 
 
         return render_template('root.html')
+
+
+@app.route('/list')
+def _list():
+    return render_template('list.html')
 
 
 def check_urls(urls):
