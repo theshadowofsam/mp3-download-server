@@ -22,7 +22,7 @@ def root():
                 flash('Enter a URL!')
             urls = urls.splitlines()
             urls, err = check_urls(urls)
-            if not err:
+            if err:
                 flash(f'There were some error URLs, ignoring them:\n{err}')
             if urls:
                 print(urls)
