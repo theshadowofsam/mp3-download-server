@@ -13,8 +13,10 @@ app.config['SECRET_KEY'] = os.urandom(24).hex()
 @app.route('/', methods=['GET', 'POST'])
 def root():
         if request.method == 'POST':
-            pass
-        
+            urls = request.form['urls']
+            if not urls:
+                flash('Enter a URL!')
+            print(urls)
         return render_template('root.html')
 
 
