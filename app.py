@@ -31,8 +31,8 @@ def root():
             if err:
                 flash(f'There were some error URLs, ignoring them:\n{err}')
             if urls:
-                print(urls)
-
+                p = Process(target=dlp.start, args=(urls,), daemon=False)      
+                p.start()
 
         return render_template('root.html')
 
@@ -43,9 +43,9 @@ def _list():
     return render_template('list.html', files=files)
 
 
-@app.route('/download/<path:file>')
-def download(file):
-    return send_from_directory('videos/', file, as_attachment=True)
+@app.route('/download/<path:filename>')
+def download(filename):
+    return send_from_directory('music/', filename, as_attachment=True)
 
 
 def check_urls(urls):
