@@ -15,7 +15,7 @@ ydl_opts = {
     'format':'250',
     'noplaylist':'True',
     'quiet':'True',
-    'outtmpl':'videos/%(title)s.%(ext)s',
+    'outtmpl':'music/%(title)s.%(ext)s',
      'postprocessors':[{
          'key':'FFmpegExtractAudio',
          'preferredcodec':'mp3',
