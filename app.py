@@ -31,6 +31,7 @@ def root():
             if err:
                 flash(f'There were some error URLs, ignoring them:\n{err}')
             if urls:
+                flash(f'Downloading and processing{urls}')
                 p = Process(target=dlp.start, args=(urls,), daemon=False)      
                 p.start()
 
@@ -52,10 +53,16 @@ def check_urls(urls):
     err = []
     good = []
     for url in urls:
-        if url.startswith('https://www.youtube.com/watch?v=') or url.startswith('youtube.com/watch?v='):
+        if url.startswith('https://www.youtube.com/') or url.startswith('youtube.com/'):
             reg = re.search(r'watch\?v=.{11}$', url)
+            play = re.search(r'playlist\?list=.+$', url)
             if reg:
-                good.append(url)
+                good.append((url, 0))
+            if play:
+                good.append((url, 1))
+            else:
+                err.append(url)
+
         else:
             err.append(url)
     return good, err
