@@ -11,17 +11,32 @@ from multiprocessing import Pool
 import sys
 
 
+
 ydl_opts = {
     'format':'250',
     'noplaylist':'True',
     'quiet':'True',
     'outtmpl':'music/%(title)s.%(ext)s',
     'restrictfilenames': 'True',
-     'postprocessors':[{
-         'key':'FFmpegExtractAudio',
-         'preferredcodec':'mp3',
-         'preferredquality':'192'
-     }]}
+    'postprocessors':[{
+        'key':'FFmpegExtractAudio',
+        'preferredcodec':'mp3',
+        'preferredquality':'192'
+    }]
+    }
+
+
+ydl_opts_pl = {
+    'format':'250',
+    'quiet':'True',
+    'outtmpl':'music/%(title)s.%(ext)s',
+    'restrictfilenames': 'True',
+    'postprocessors':[{
+        'key':'FFmpegExtractAudio',
+        'preferredcodec':'mp3',
+        'preferredquality':'192'
+    }]
+    }
 
 
 def download(url):
@@ -30,12 +45,24 @@ def download(url):
     return
 
 
+def extract_pl(url):
+    with YoutubeDL(ydl_opts_pl) as yt:
+        info = yt.extract_info(url, download=False)
+        videos = []
+        # print(asd['entries'][1])
+        for video in info['entries']:
+            videos.append(video['original_url'])
+    return videos
+
+
 def start(urls):
     try:
         todo = []
         for url in urls:
-            if url.startswith("https://www.youtube.com/watch?v="):
-                todo.append(url)
+            if not url[1]:
+                todo.append(url[0])
+            else:
+                todo += extract_pl(url[0])
         with Pool() as p:
             p.map(download, todo)
     except:
